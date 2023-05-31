@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "forecast_dataset_tools"
+
+version = "0.1.0"
+authors = [
+  { name="Paul Brown"},
+]
+description = "Retrieve, save, process, and load time-series datasets, especially for PV power forecasting."
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies =[
+    "numpy",
+    "pandas",
+    "sqlalchemy",
+    "requests",
+    "click",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+forecast_dataset_tools = "forecast_dataset_tools.cli:cli"
+data_downloader = "forecast_dataset_tools.downloader.cli:download"
+db_archiver = "forecast_dataset_tools.db_archiver.cli:archive"
+
+[project.urls]
+"Homepage" = "https://github.com/pdb5627/forecast_dataset_tools"
+"Bug Tracker" = "https://github.com/pdb5627/forecast_dataset_tools/issues"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+line_length = 120
+profile = "black"

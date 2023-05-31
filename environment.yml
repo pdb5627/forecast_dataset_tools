@@ -1,0 +1,13 @@
+name: forecast_dataset_tools
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - requests
+  - pandas
+  - sqlalchemy
+  - numpy
+  - openssl<3.0.0
+  - pip
+  - pip:
+    - click

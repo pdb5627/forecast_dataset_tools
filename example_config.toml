@@ -1,0 +1,46 @@
+###  IMPORTANT: Be careful not to make your API keys public!  ###
+#
+# Users can remove or comment out any sections that do not apply.
+
+# Main data directory to which all other data directories are relative
+main_data_dir = "~/data/"
+dataset_db_file = "datasets.sqlite"
+reset_db = false
+locations_file = "locations.csv"
+
+
+["SolCast Weather"]
+api_key = "xxxxx"
+data_dir = "SolCast"
+db_table = "solcast_weather"
+
+
+[OpenWeather]
+# Currently download only. No database storage at this time.
+api_key = "xxxxx"
+data_dir = "OpenWeather"
+
+
+[ClimaCell]
+# Currently download only. No database storage at this time.
+api_key = "xxxxx"
+data_dir = "ClimaCell"
+
+
+["MGM Hava Durumu"]
+# Currently download only. No database storage at this time.
+data_dir = "MGM/HavaDurumu"
+
+
+[Meteogram]
+# Currently download is done manually using an external script.
+# Digitizing the downloaded file requires https://github.com/pdb5627/meteogram_extract
+data_dir = "MGM/Meteogram/Ankara_Cankaya_old"
+db_table = "meteogram"
+
+
+["ABB Inverter"]
+# Data download is done manually from the inverter logger's wifi interface.
+# The downloaded json files can overlap each other. (To ensure no gaps, it's best if they do overlap.)
+data_dir = "ABB_inverter"
+db_table = "abb_inverter"
