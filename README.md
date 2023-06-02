@@ -104,6 +104,20 @@ or
 db_archiver [OPTIONS] CONFIG_FILENAME
 ```
 
+The cli interface uses configuration files to load the necessary data regarding
+data sources and forecast locations. Information about data sources and local
+file locations is loaded from a TOML configuration file. An example of such a
+configuration file is included with the package as the file
+`example_config.toml`. Since API keys may be specified in this file, users
+should be careful not to commit their production configuration file to a public
+code repository.
+
+Information about locations at which forecasts are to be retrieved and stored is
+loaded from a csv-formatted file. An example of such a file is provided with the
+package as `example_locations.csv`.
+
+For now the format of these files is not documented beyond the provided examples.
+
 ### Library usage
 
 The `downloader` module includes classes for downloading data from various data
