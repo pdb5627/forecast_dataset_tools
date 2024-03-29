@@ -161,7 +161,7 @@ class DataSet:
         # Processing steps don't work if there isn't any data to process
         if len(df) < 2:
             return df
-        
+
         index = pd.date_range(
             start=df.index[0].ceil(self.resample_interval),
             end=df.index[-1].floor(self.resample_interval),
@@ -180,7 +180,7 @@ class DataSet:
         Δt = index[1] - index[0]
         for (start1, end1), (start2, end2) in zip(db_intervals[:-1], db_intervals[1:]):
             if start2 - end1 > 2*Δt:
-                df2.loc[(end1+Δt/10):(start1-Δt/10)] = np.nan
+                df2.loc[(end1+Δt/10):(start2-Δt/10)] = np.nan
 
         # Resampling step. Use avg.
         if self.average_interval is not None:
@@ -282,6 +282,31 @@ class DataSet:
             yield self.get_data_by_date(site_id,
                                         start + (days_available//ndays)*timedelta(days=ndays),
                                         end)
+
+    @property
+    def continuous_data_intervals(self):
+        """
+        Return a list of intervals in which the data does not have gaps.
+        """
+        stmt = sqlalchemy.select(self.intervals_table.c.start, self.intervals_table.c.end)
+        stmt = stmt.order_by(self.intervals_table.c.start.asc())
+
+        with self.db_engine.connect() as conn:
+            db_intervals = list(conn.execute(sqlalchemy.select(self.intervals_table.c.start,
+                                                               self.intervals_table.c.end)
+                                             .order_by(self.intervals_table.c.start)))
+
+
+        Δt = pd.to_timedelta(self.resample_interval) / 10
+        interval_start = db_intervals[0][0]
+        intervals = []
+        for (start1, end1), (start2, end2) in zip(db_intervals[:-1], db_intervals[1:]):
+            if start2 - end1 > 2*Δt:
+                # End the continuous interval and start a new one
+                intervals.append((interval_start, end1))
+                interval_start = start2
+        intervals.append((interval_start, end2))
+        return intervals
 
 
 def extract_complete_days(df, expected_interval=None):

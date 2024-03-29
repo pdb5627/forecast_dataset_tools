@@ -62,7 +62,8 @@ def convert_paths(cfg):
     cfg["main_data_dir"] = Path(cfg["main_data_dir"]).expanduser().resolve()
 
     for subdir in ["dataset_db_file", "locations_file"]:
-        cfg[subdir] = cfg["main_data_dir"] / cfg[subdir]
+        if subdir in cfg:
+            cfg[subdir] = cfg["main_data_dir"] / cfg[subdir]
 
     for group in cfg.keys():
         if isinstance(cfg[group], dict) and "data_dir" in cfg[group]:

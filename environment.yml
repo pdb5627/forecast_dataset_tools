@@ -9,5 +9,6 @@ dependencies:
   - numpy
   - openssl<3.0.0
   - pip
+  - platformdirs
   - pip:
     - click
